@@ -1,8 +1,11 @@
-/** TODO:
+/**
  * write a program to check a C program for rudimentary syntax errors like
- * unbalanced parenthese, brackets and braces. Don't forget about quotes, both
+ * unbalanced parenthese, brackets and braces. Dont forget about quotes, both
  * single and double, escape sequences, and comments. (This program is hard if
  * you do it in full generality)
+ *
+ * note: for source files that work with char and string (like this one), this program may file on them
+ * such program will typically have expressions like '"', or '\''. if that is the case, symbol ' and " are naturally single.
  */
 
 #include <stdio.h>
@@ -36,7 +39,8 @@ int main() {
     }
 
     if (!pair2(c, '/', '*', '*', '/')) {
-      printf(" <- Mismatching the opening for \'%c%c.\'", '*', '/');
+      printf(" <- Mismatching the opening for \'%c%c\'. The currently unpaired symbols are: ", '*', '/');
+      printStack();
     }
   }
   if (lens > 0) {
@@ -88,6 +92,7 @@ int pair2(char c, char op1, char op2, char cl1, char cl2) {
   } else if (c == cl1) {
     char c2 = getchar();
     putchar(c2);
+    // printf("stack[lens-1] is %c, stack [lens-2] is %c", stack[lens - 1], stack[lens - 2]);
     if (lens < 2) {
       return FAIL;
     } else if (c2 != cl2) {
